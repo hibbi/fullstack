@@ -8,10 +8,10 @@ const Header = ({ title }) => {
   return <h1>{title}</h1>;
 };
 
-const Stat = ({ stat, text }) => {
+const StatisticLine = ({ text, value }) => {
   return (
     <p>
-      {text} {stat}
+      {text} {value}
     </p>
   );
 };
@@ -30,12 +30,12 @@ const Statistics = (props) => {
   return (
     <div>
       <Header title={props.title} />
-      <Stat text="good" stat={props.good} />
-      <Stat text="neutral" stat={props.neutral} />
-      <Stat text="bad" stat={props.bad} />
-      <Stat text="all" stat={props.all} />
-      <Stat text="positive" stat={(props.good / props.all) * 100 + "%"} />
-      <Stat text="average" stat={props.average} />
+      <StatisticLine text="good" value={props.good} />
+      <StatisticLine text="neutral" value={props.neutral} />
+      <StatisticLine text="bad" value={props.bad} />
+      <StatisticLine text="all" value={props.all} />
+      <StatisticLine text="positive" value={(props.good / props.all) * 100 + "%"} />
+      <StatisticLine text="average" value={props.average} />
     </div>
   );
 };
@@ -58,7 +58,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>give feedback</h1>
+      <Header title="give feedback" />
       <Button handleClick={handleGoodClick} text={"good"} />
       <Button handleClick={handleNeutralClick} text={"neutral"} />
       <Button handleClick={handleBadClick} text={"bad"} />
