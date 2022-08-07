@@ -1,12 +1,20 @@
 import { useState } from "react";
 
 const Button = ({ handleClick, text }) => {
-  return <button onClick={handleClick}>{text}</button>
-}
+  return <button onClick={handleClick}>{text}</button>;
+};
 
 const DisplayVote = ({ vote }) => {
-  return <p>has {vote} votes</p>
-}
+  return <p>has {vote} votes</p>;
+};
+
+const Header = ({ text }) => {
+  return <h1>{text}</h1>;
+};
+
+const DisplayAnecdote = ({ anecdote }) => {
+  return <p>{anecdote}</p>;
+};
 
 const App = () => {
   const anecdotes = [
@@ -20,27 +28,37 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
-  //laske anekdoottien lukumäärä (7)
-  const numberOfAnecdotes = anecdotes.length
+  const numberOfAnecdotes = anecdotes.length;
   const [votes, setVotes] = useState(Array(numberOfAnecdotes).fill(0));
 
+  const highestVoteCount = Math.max(...votes);
+  const idxOfHighestVote = votes.indexOf(highestVoteCount);
+
   const handleSelected = () => {
-    setSelected(Math.floor(Math.random() * anecdotes.length))
-  }
+    setSelected(Math.floor(Math.random() * anecdotes.length));
+  };
 
   const handleVotes = () => {
-    const copyOfVotes = [...votes]
-    copyOfVotes[selected] += 1
-    setVotes(copyOfVotes)
-  }
+    const copyOfVotes = [...votes];
+    copyOfVotes[selected] += 1;
+    setVotes(copyOfVotes);
+  };
 
   return (
-    <div>
-      <p>{anecdotes[selected]}</p>
-      <DisplayVote vote={votes[selected]} />
-      <Button handleClick={handleVotes} text={"vote"} />
-      <Button handleClick={handleSelected} text={"randomize anecdote"} />
-    </div>
+    <>
+      <div>
+        <Header text="Anecdote of the day" />
+        <DisplayAnecdote anecdote={anecdotes[selected]} />
+        <DisplayVote vote={votes[selected]} />
+        <Button handleClick={handleVotes} text={"vote"} />
+        <Button handleClick={handleSelected} text={"randomize anecdote"} />
+      </div>
+      <div>
+        <Header text="Anecdote with most votes" />
+        <DisplayAnecdote anecdote={anecdotes[idxOfHighestVote]} />
+        <DisplayVote vote={highestVoteCount} />
+      </div>
+    </>
   );
 };
 
