@@ -10,9 +10,10 @@ const Header = ({ title }) => {
 
 const StatisticLine = ({ text, value }) => {
   return (
-    <p>
-      {text} {value}
-    </p>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   );
 };
 
@@ -30,12 +31,19 @@ const Statistics = (props) => {
   return (
     <div>
       <Header title={props.title} />
-      <StatisticLine text="good" value={props.good} />
-      <StatisticLine text="neutral" value={props.neutral} />
-      <StatisticLine text="bad" value={props.bad} />
-      <StatisticLine text="all" value={props.all} />
-      <StatisticLine text="positive" value={(props.good / props.all) * 100 + "%"} />
-      <StatisticLine text="average" value={props.average} />
+      <table>
+        <tbody>
+          <StatisticLine text="good" value={props.good} />
+          <StatisticLine text="neutral" value={props.neutral} />
+          <StatisticLine text="bad" value={props.bad} />
+          <StatisticLine text="all" value={props.all} />
+          <StatisticLine
+            text="positive"
+            value={(props.good / props.all) * 100 + "%"}
+          />
+          <StatisticLine text="average" value={props.average} />
+        </tbody>
+      </table>
     </div>
   );
 };
