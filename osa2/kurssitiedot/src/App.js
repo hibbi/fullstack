@@ -5,11 +5,10 @@ const Header = ({ name }) => {
 const Course = (props) => {
   const { course } = props;
   const countAll = course.parts.map((n) => n.exercises);
-  let total = 0;
-
-  for (const value of countAll) {
-    total += value;
-  }
+  
+  const total = countAll.reduce((prevValue, value) => {
+  return prevValue + value;
+}, 0);
 
   return (
     <div>
