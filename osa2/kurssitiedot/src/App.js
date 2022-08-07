@@ -3,14 +3,22 @@ const Header = ({ name }) => {
 };
 
 const Course = (props) => {
-  const { course } = props
+  const { course } = props;
+  const countAll = course.parts.map((n) => n.exercises);
+  let total = 0;
+
+  for (const value of countAll) {
+    total += value;
+  }
+
   return (
     <div>
       <Header name={course.name} />
       <Content parts={course.parts} />
+      <Total counter={total} />
     </div>
   );
-}
+};
 
 const Part = ({ name, exercises }) => {
   return (
@@ -24,22 +32,14 @@ const Content = ({ parts }) => {
   return (
     <>
       {parts.map((part) => (
-        <Part
-          key={part.id}
-          name={part.name}
-          exercises={part.exercises}
-        />
+        <Part key={part.id} name={part.name} exercises={part.exercises} />
       ))}
     </>
   );
 };
 
-const Total = ({ parts }) => {
-  return (
-    <p>
-      Number of exercises {parts[0].exercises + parts[1].exercises + parts[2].exercises}
-    </p>
-  );
+const Total = ({ counter }) => {
+  return <strong>Number of exercises {counter}</strong>;
 };
 
 const App = () => {
@@ -61,6 +61,11 @@ const App = () => {
         name: "State of a component",
         exercises: 14,
         id: 3,
+      },
+      {
+        name: "Redux",
+        exercises: 11,
+        id: 4,
       },
     ],
   };
