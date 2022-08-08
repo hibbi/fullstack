@@ -1,50 +1,4 @@
-const Header = ({ name }) => {
-  return <h1>{name}</h1>;
-};
-
-const Course = (props) => {
-  const { courses } = props;
-
-  return (
-    <div>
-      {courses.map((course) => (
-        <div>
-          <Header id={course.id} name={course.name} />
-          <Content parts={course.parts} />
-          <Total parts={course.parts} />
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const Part = ({ name, exercises }) => {
-  return (
-    <p>
-      {name} {exercises}
-    </p>
-  );
-};
-
-const Content = ({ parts }) => {
-  return (
-    <>
-      {parts.map((part) => (
-        <Part key={part.id} name={part.name} exercises={part.exercises} />
-      ))}
-    </>
-  );
-};
-
-const Total = ({ parts }) => {
-  const countAll = parts.map((n) => n.exercises);
-
-  const total = countAll.reduce((prevValue, value) => {
-    return prevValue + value;
-  }, 0);
-
-  return <strong>Number of exercises {total} </strong>;
-};
+import Components from './components/course'
 
 const App = () => {
   const course = [
@@ -93,7 +47,7 @@ const App = () => {
   ];
   return (
     <div>
-      <Course courses={course} />
+      <Components courses={course} />
     </div>
   );
 };
