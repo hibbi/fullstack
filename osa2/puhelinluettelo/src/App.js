@@ -11,16 +11,26 @@ const App = () => {
   const handleInputChange = (event) => {
     setNewName(event.target.value);
     //console.log(event.target.value)
-  }
-  
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-      const nameObject = {
-    name: newName,
-    id: persons.length + 1,
-  }
-    setPersons(persons.concat(nameObject))
-    setNewName('')
+    const nameObject = {
+      name: newName,
+      id: persons.length + 1,
+    };
+
+    const names = persons.map((person) => {
+      return person.name.toLowerCase();
+    });
+
+    const isThereMatch = names.find(name => name === newName.toLowerCase())
+    if (isThereMatch === undefined) {
+      setPersons(persons.concat(nameObject));
+      setNewName("");
+    } else {
+      alert(`${newName} is already added to phonebook`);
+    }
   };
 
   return (
@@ -29,11 +39,7 @@ const App = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="inputName">name:</label>
-          <input
-            id="inputName"
-            value={newName}
-            onChange={handleInputChange}
-          />
+          <input id="inputName" value={newName} onChange={handleInputChange} />
         </div>
         <div>
           <Button type="submit" text="add" />
@@ -42,9 +48,7 @@ const App = () => {
       <h2>Numbers</h2>
       <div>
         {persons.map((person) => (
-          <p key={person.id}>
-            {person.name}
-          </p>
+          <p key={person.id}>{person.name}</p>
         ))}
       </div>
     </div>
