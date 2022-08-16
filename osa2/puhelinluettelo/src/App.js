@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Button = ({ type, text }) => {
   return <button type={type}>{text}</button>;
@@ -31,7 +32,7 @@ const Persons = ({ persons, filter }) => {
       {filteredPersons.length > 0 ?
       filteredPersons.map((person) => (
         <p key={person.id}>
-          {person.name} {person.phone}
+          {person.name} {person.number}
         </p>
       )) :
         <h3>Haulla ei löytynyt nimiä.</h3>
@@ -64,13 +65,23 @@ const PersonForm = ( props ) => {
 };
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", id: 1, phone: "040-1231244" },
-  ]);
+  const [persons, setPersons] = useState([]);
 
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [newQ, setNewQ] = useState("");
+
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled', response.data)
+        setPersons(response.data)
+      })
+  },
+    [])
+  console.log('render', persons.length, 'notes')
 
   const HandleSearchChange = (event) => {
     setNewQ(event.target.value);
@@ -89,7 +100,7 @@ const App = () => {
     const nameObject = {
       name: newName,
       id: persons.length + 1,
-      phone: newNumber,
+      number: newNumber,
     };
 
     const names = persons.map((person) => {
